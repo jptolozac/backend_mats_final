@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function login(Request $request){
-        //dd('holii');
+        dd('holii');
         $this->validateLogin($request);
         $credenciales = $request->only('email', 'password');
 
