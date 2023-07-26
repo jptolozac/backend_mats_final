@@ -31,8 +31,10 @@ class Noticia extends Model
     }
 
     public static function BuscarNoticias(String $busqueda, int $cantidad){
+        $orden = request()->orden == "likes" ? "likes" : "created_at";
         return Noticia::where("titulo", "like", "%{$busqueda}%")
         ->orwhere("descripcion", "like", "%{$busqueda}%")
-        ->latest()->paginate($cantidad);
+        ->orderBy($orden, "desc")
+        ->paginate($cantidad);
     }
 }

@@ -23,7 +23,7 @@ class NoticiaResource extends JsonResource
             'descripcion' => $this->descripcion,
             'archivo' => $this->archivo,
             'likes' => $this->likes,
-            'fecha' => Carbon::parse($this->published_at)->toDateString()
+            'fecha' => Carbon::parse($this->created_at)->toDateString()
         ];
     }
 }
