@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class FileController extends Controller
 {
@@ -24,13 +25,25 @@ class FileController extends Controller
         ], 200);
     }
 
-    public function downloadFile($id){
+    public function downloadFile(int $id){
         $consulta = DB::select("SELECT archivo from noticias where id = {$id}");
         $nombre = $consulta[0]->archivo;
         //dd($nombre);
+        $ruta = 'public/noticias/' . $nombre;
 
         if(Storage::disk($this->disk)->exists('noticias/' . $nombre)){
-            return Storage::disk($this->disk)->download('noticias/' . $nombre);
+            //return Storage::disk($this->disk)->download('noticias/' . $nombre);
+            $rutaArchivo = 'noticias/' . $nombre;
+            $archivo = Storage::disk($this->disk)->get($rutaArchivo);
+
+            // Obtener el tipo de contenido del archivo (mime type)
+            $tipoContenido = Storage::disk($this->disk)->mimeType($rutaArchivo);
+
+            // Crear una respuesta con el archivo y el tipo de contenido
+            return Response::make($archivo, 200, [
+                'Content-Type' => $tipoContenido,
+                'Content-Disposition' => 'inline; filename="' . $nombre . '"',
+            ]);
         }
         return response('No se encuentra el archivo', 404);
     }
