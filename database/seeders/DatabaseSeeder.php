@@ -42,6 +42,14 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Apoyo::factory(50)->create();
 
+        \App\Models\Tarjeta::factory(100)->create();
+
+        \App\Models\Categoria::factory(10)->create();
+
+        \App\Models\TarjetasUsuarios::factory(100)->create();
+
+        \App\Models\TarjetasCategorias::factory(100)->create();
+
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
