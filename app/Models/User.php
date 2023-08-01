@@ -22,7 +22,7 @@ class User extends Authenticatable
 
     public function consultarNoticias(String $busqueda, String $orden){
         
-        $noticias = DB::select("select n.id, n.titulo, n.descripcion, IFNULL(ap.estado, 0) as apoyada, n.archivo, n.likes, DATE_FORMAT(n.created_at, '%Y-%m-%d') as fecha, tu.perfil
+        $noticias = DB::select("select n.id, n.titulo, n.descripcion, IFNULL(ap.estado, 0) as apoyado, n.archivo, n.likes, DATE_FORMAT(n.created_at, '%Y-%m-%d') as fecha, tu.perfil
                             from noticias_tipos nt join tipo_usuarios tu on (nt.tipo_usuario_id = tu.id) 
                                                     join noticias n on (nt.noticia_id = n.id) 
                                                     join users us on (us.tipo_usuario_id = tu.id)
