@@ -24,7 +24,12 @@ class TipoUsuarioResource extends JsonResource
         $perPage = 20;
 
         $busqueda = isset($request->buscar) ? $request->buscar : "";
-        $shows = $this->consultarNoticias($busqueda);
+
+        if(isset($request->usuario)){
+            $shows = $this->consultarNoticiasApoyo($busqueda, $request->usuario);
+        }else{
+            $shows = $this->consultarNoticias($busqueda);
+        }
 
         $collection = collect($shows);
 
