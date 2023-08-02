@@ -33,12 +33,9 @@ Route::apiResource('v1/noticias/interes', NoticiaController::class) //cantidad d
 Route::apiResource('v1/noticias', NoticiaController::class) //cantidad de likes y fecha
         ->only('index','show');
 
-Route::get('v1/puto', function (){
-        echo 'puto';
-});
-
 Route::apiResource('v1/apoyo', ApoyoController::class)
         ->only('store');
+//algo
 
 Route::post('v1/noticias', [NoticiaController::class, 'cantidadNoticias']);
 

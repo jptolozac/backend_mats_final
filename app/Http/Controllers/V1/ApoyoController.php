@@ -31,16 +31,30 @@ class ApoyoController extends Controller
 
         $apoyo = new Apoyo();
 
-        //dd($apoyo->consultarUsuario($request->usuario)[0]->id);
-        $apoyo->user_id = ($apoyo->consultarUsuario($request->usuario)[0]->id);
-        $apoyo->noticia_id = $request->noticia;
-        $apoyo->estado = 1;
+        //dd($request->accion);
 
-        $apoyo->save();
+        if(isset($request->accion)){
+            if($request->accion == 'agregar'){
+                //dd($apoyo->consultarUsuario($request->usuario)[0]->id);
+                $apoyo->user_id = ($apoyo->consultarUsuario($request->usuario)[0]->id);
+                $apoyo->noticia_id = $request->noticia;
+                $apoyo->estado = 1;
 
-        return response()->json([
-            "mensaje" => "apoyo registrado"
-        ]);
+                $apoyo->save();
+
+                return response()->json([
+                    "mensaje" => "apoyo registrado"
+                ]);
+            }else if ($request->accion == 'eliminar'){
+                $apoyo->where('user_id', '=', $apoyo->consultarUsuario($request->usuario)[0]->id)
+                         ->where('noticia_id', '=', $request->noticia)
+                         ->delete();
+                
+                return response()->json([
+                    "mensaje" => "apoyo eliminado"
+                ]);
+            }
+        }
     }
 
     /**
