@@ -34,7 +34,7 @@ Route::apiResource('v1/noticias', NoticiaController::class) //cantidad de likes 
         ->only('index','show');
 
 Route::apiResource('v1/apoyo', ApoyoController::class)
-        ->only('store');
+        ->only('store', 'index'); //rubio puto
 //algo
 
 Route::post('v1/noticias', [NoticiaController::class, 'cantidadNoticias']);
