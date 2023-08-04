@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Noticia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Response;
 class FileController extends Controller
 {
     private $disk = "public";
-    public function storeFile(Request $request){
+    public function storeFile(Request $request, string $id){
         $archivo = $request->file('archivo');
         $nombre = $archivo->hashName();
 
@@ -19,10 +20,16 @@ class FileController extends Controller
 
         //dd($archivo->getClientOriginalName());
 
+        if($this->modificarNoticia($id, $nombre)){
+            return response()->json([
+                "message" => "archivo cargado correctamente",
+                "archivo" => $nombre
+            ], 200);
+        }
+
         return response()->json([
-            "message" => "archivo cargado correctamente",
-            "archivo" => $nombre
-        ], 200);
+            "message" => "no se pudo cargar el archivo"
+        ], 409);
     }
 
     public function downloadFile(int $id){
@@ -46,5 +53,8 @@ class FileController extends Controller
             ]);
         }
         return response('No se encuentra el archivo', 404);
+    }
+    public function modificarNoticia(string $id, string $archivo){
+        return (Noticia::where('id', '=', $id)->update(['archivo' => $archivo]));
     }
 }
