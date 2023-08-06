@@ -31,7 +31,7 @@ Route::apiResource('v1/noticias/interes', NoticiaController::class) //cantidad d
  */
 
 Route::apiResource('v1/noticias', NoticiaController::class) //cantidad de likes y fecha
-        ->only('index','show');
+        ->only('index','show', 'update');
 
 Route::apiResource('v1/apoyo', ApoyoController::class)
         ->only('store', 'index'); //rubio puto

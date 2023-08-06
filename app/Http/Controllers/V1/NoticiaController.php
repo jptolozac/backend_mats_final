@@ -52,17 +52,22 @@ class NoticiaController extends Controller
         return new NoticiaResource($noticia);
     }
 
-    /* public function tipoUsuario(TipoUsuario $noticia)
-    {
-        return new TipoUsuarioResource($noticia);
-    } */
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Noticia $noticia)
     {
-        //
+        $noticia->titulo = $request->noticia->titulo;
+        //$noticia->fecha = $request->noticia->fecha;
+        $noticia->descripcion = $request->noticia->descripcion;
+
+        $noticia->save();
+
+        //lo de noticias_tipo aquí
+
+        return response()->json([
+            "mensaje" => "cambios guardados"
+        ], 200);
     }
 
     /**
