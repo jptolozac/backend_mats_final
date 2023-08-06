@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\NoticiaResource;
 use App\Models\Noticia;
+use App\Models\NoticiasTipo;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\NoticiaCollection;
 
@@ -57,13 +58,23 @@ class NoticiaController extends Controller
      */
     public function update(Request $request, Noticia $noticia)
     {
-        $noticia->titulo = $request->noticia->titulo;
+        $noticia->titulo = $request->titulo;
         //$noticia->fecha = $request->noticia->fecha;
-        $noticia->descripcion = $request->noticia->descripcion;
+        $noticia->descripcion = $request->descripcion;
 
         $noticia->save();
 
-        //lo de noticias_tipo aquí
+        NoticiasTipo::where('noticia_id', $noticia->id)->delete();
+        foreach($request->noticiaTipo as $tipo){
+            $noticiaTipo = [
+                "tipo_usuario_id" => $tipo,
+                "noticia_id" => $noticia->id
+            ];
+
+            NoticiasTipo::create($noticiaTipo);
+        }
+
+        //dd($request->noticiaTipo);
 
         return response()->json([
             "mensaje" => "cambios guardados"

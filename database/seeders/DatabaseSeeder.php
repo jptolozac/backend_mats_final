@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'id' => 20202578024,
             'name' => 'nicolas rubio',
             'email' => 'nrubios@udistrital.edu.co',
-            'password' => 'nicolas123', // password
+            'password' => 'nicolas123'
         ]);
 
         \App\Models\Administrador::create([
