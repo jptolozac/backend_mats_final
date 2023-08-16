@@ -12,6 +12,11 @@ class Noticia extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'titulo',
+        'descripcion'
+    ];
+
     /* public function noticiaTipo(){
         return $this->BelongsTo(NoticiaTipo::class);
     } */
@@ -31,7 +36,13 @@ class Noticia extends Model
     }
 
     public static function BuscarNoticias(String $busqueda, int $cantidad){
-        $orden = request()->orden == "likes" ? "likes" : "created_at";
+        $orden = request()->orden == "likes" ? "likes" : "updated_at";
+        if($cantidad == 0){
+            return Noticia::where("titulo", "like", "%{$busqueda}%")
+            ->orwhere("descripcion", "like", "%{$busqueda}%")
+            ->orderBy($orden, "desc")
+            ->get();
+        }
         return Noticia::where("titulo", "like", "%{$busqueda}%")
         ->orwhere("descripcion", "like", "%{$busqueda}%")
         ->orderBy($orden, "desc")

@@ -18,7 +18,7 @@ class UserResource extends JsonResource
 
         if($request->noticias == "true"){
             $busqueda = isset($request->buscar) ? $request->buscar : "";
-            $orden = $request->orden == "likes" ? "likes" : "created_at";
+            $orden = ($request->orden == "likes") ? "likes" : "updated_at";
     
             $noticias = $this->consultarNoticias($busqueda, $orden);
 

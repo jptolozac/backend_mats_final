@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\V1\CategoriaController;
 use App\Http\Controllers\V1\ApoyoController;
+use App\Http\Controllers\V1\TarjetaController;
 use App\Http\Controllers\V1\UserController;
 use App\Http\Controllers\V1\FileController;
 use Illuminate\Http\Request;
@@ -30,14 +32,19 @@ Route::apiResource('v1/noticias/interes', NoticiaController::class) //cantidad d
         ->only('index','show');
  */
 
+Route::apiResource('v1/tarjetas', TarjetaController::class)
+        ->only('index');
+
+Route::apiResource('v1/categorias', CategoriaController::class)
+        ->only('index', 'store');
+
 Route::apiResource('v1/noticias', NoticiaController::class) //cantidad de likes y fecha
-        ->only('index','show', 'update');
+        ->only('index', 'store', 'show', 'update', 'destroy');
 
 Route::apiResource('v1/apoyo', ApoyoController::class)
-        ->only('store', 'index'); //rubio puto
-//algo
+        ->only('store', 'index');
 
-Route::post('v1/noticias', [NoticiaController::class, 'cantidadNoticias']);
+Route::post('v1/noticias/cantidadNoticias', [NoticiaController::class, 'cantidadNoticias']);
 
 Route::apiResource('v1/tipo_usuario', TipoUsuarioController::class)
         ->only('show');

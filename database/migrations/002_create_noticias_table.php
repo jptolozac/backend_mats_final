@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descripcion');
-            $table->string('archivo');
-            $table->integer('likes');
+            $table->string('archivo')->default('');
+            $table->integer('likes')->default(0);
             $table->timestamps();
         });
     }

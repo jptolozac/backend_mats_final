@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('tarjeta_id');
             $table->unsignedBigInteger('tipo_id');
+            $table->unique(['tarjeta_id', 'tipo_id']);
             $table->timestamps();
 
             $table->foreign('tarjeta_id')->references('id')->on('tarjetas')->onDelete('cascade');
