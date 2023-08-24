@@ -43,9 +43,9 @@ class Noticia extends Model
             ->orderBy($orden, "desc")
             ->get();
         }
-        return Noticia::where("titulo", "like", "%{$busqueda}%")
+        return (Noticia::where("titulo", "like", "%{$busqueda}%")
         ->orwhere("descripcion", "like", "%{$busqueda}%")
         ->orderBy($orden, "desc")
-        ->paginate($cantidad);
+        ->paginate($cantidad));
     }
 }

@@ -23,7 +23,7 @@ class Tarjeta extends Model
                                                 join tipo_usuarios tu on (tu.id = tju.tipo_id)
                                                 join categorias cat on (cat.id = tjc.categoria_id) "
                                 . ((isset($tipoUsuario) || isset($tipoUsuario)) ? "where " : "")
-                                . ((!empty($tipoUsuario)) ? "tu.id = {$tipoUsuario} " : "")
+                                . ((!empty($tipoUsuario) && $tipoUsuario != "administrador") ? "(tu.perfil = '{$tipoUsuario}') or tu.perfil = 'publico' " : "")
                                 . ((!empty($categoria)) ? "and cat.nombre = '{$categoria}' " : "" )
                                 . "group by tj.id, tj.titulo, tj.descripcion;"));
     }

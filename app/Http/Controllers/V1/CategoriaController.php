@@ -14,7 +14,12 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        return new CategoriaResource(Categoria::all());
+        if(isset(request()->tarjeta) && !empty(request()->tarjeta)){
+            $categorias = Categoria::getCategoriasUsuario(request()->tarjeta);
+        }else{
+            $categorias = Categoria::all();
+        }
+        return new CategoriaResource($categorias);
     }
 
     /**

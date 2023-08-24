@@ -18,10 +18,10 @@ class NoticiaController extends Controller
 
     private $cantidadNoticias = 0;
     public function index(){
-        $busqueda = isset($request->buscar) ? request()->buscar : '';
-        $cantidad = isset($request->cantidad) ? request()->cantidad : $this->cantidadNoticias;
-
-        return new NoticiaCollection(Noticia::BuscarNoticias('', $this->cantidadNoticias));
+        $busqueda = isset(request()->buscar) ? request()->buscar : '';
+        $cantidad = isset(request()->cantidad) ? request()->cantidad : $this->cantidadNoticias;
+        
+        return new NoticiaCollection((Noticia::BuscarNoticias($busqueda, $cantidad)));
     }
 
     public function cantidadNoticias(Request $request){
