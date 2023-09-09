@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        /* \App\Models\Permiso::create(['tipo_permiso' => 'administrador']);
+        \App\Models\Permiso::create(['tipo_permiso' => 'administrador']);
         \App\Models\Permiso::create(['tipo_permiso' => 'cliente']);
         \App\Models\Permiso::create(['tipo_permiso' => 'usuario_final']);
 
@@ -44,15 +44,32 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Tarjeta::factory(100)->create();
 
-        \App\Models\Categoria::factory(10)->create(); */
+        \App\Models\Categoria::factory(10)->create();
 
-        //\App\Models\TarjetasUsuarios::factory(100)->create();
+        \App\Models\TarjetasUsuarios::factory(30)->create();
 
-        //\App\Models\TarjetasCategorias::factory(100)->create();
+        \App\Models\TarjetasCategorias::factory(30)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\Prioridad::create(['relevancia' => 'alta']);
+        \App\Models\Prioridad::create(['relevancia' => 'media']);
+        \App\Models\Prioridad::create(['relevancia' => 'baja']);
+
+        \App\Models\CategoriaTK::factory(5)->create();
+
+        \App\Models\Item::factory(10)->create();
+        
+        \App\Models\Estado::create(['nombre' => 'no visto']);
+        \App\Models\Estado::create(['nombre' => 'visto']);
+
+        \App\Models\Comentario::factory(50)->create();
+
+        \App\Models\Ticket::factory(100)->create();
+
+        \App\Models\ComentariosTicket::factory(100)->create();
+
+        \App\Models\User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
     }
 }

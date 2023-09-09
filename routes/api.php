@@ -33,10 +33,10 @@ Route::apiResource('v1/noticias/interes', NoticiaController::class) //cantidad d
  */
 
 Route::apiResource('v1/tarjetas', TarjetaController::class)
-        ->only('index');
+        ->only('index', 'show', 'update', 'destroy');
 
 Route::apiResource('v1/categorias', CategoriaController::class)
-        ->only('index', 'store');
+        ->only('index', 'store', 'update', 'destroy');
 
 Route::apiResource('v1/noticias', NoticiaController::class) //cantidad de likes y fecha
         ->only('index', 'store', 'show', 'update', 'destroy');

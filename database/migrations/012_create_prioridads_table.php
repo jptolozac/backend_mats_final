@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('prioridads', function (Blueprint $table) {
             $table->id();
+            $table->string('relevancia');
             $table->timestamps();
         });
     }

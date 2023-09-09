@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -24,7 +25,15 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
+            return response()->json([
+                "mensaje" => $e
+            ]);
         });
+    }
+
+    public function render($request, Throwable $exception){
+        return response()->json([
+            "mensaje" => "Por favor verifique la información"
+        ], 404);
     }
 }

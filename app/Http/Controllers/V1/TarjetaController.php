@@ -4,6 +4,8 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tarjeta;
+use App\Models\TarjetasCategorias;
+use App\Models\TarjetasUsuarios;
 use Illuminate\Http\Request;
 
 class TarjetaController extends Controller
@@ -19,7 +21,13 @@ class TarjetaController extends Controller
         dd($categoria); */
 
         $tarjeta = new Tarjeta();
-        return $tarjeta->getPreguntas(request()->tipoUsuario, request()->categoria);
+        $categorias = explode(",",request()->categorias);
+        $categorias = ($categorias == [""]) ? null : $categorias;
+        
+        if($categorias != null && $categorias[count($categorias)-1] == "")
+            unset($categorias[count($categorias)-1]);
+
+        return $tarjeta->getPreguntas(request()->tipoUsuario, $categorias, request()->buscar);
     }
 
     /**
@@ -35,7 +43,12 @@ class TarjetaController extends Controller
      */
     public function show(Tarjeta $tarjeta)
     {
-        //
+        $busqueda = TarjetasUsuarios::getUsuariosTarjeta($tarjeta);
+        $usuariosTarjeta = [];
+        foreach($busqueda as $tipo){
+            array_push($usuariosTarjeta, $tipo->tipo_id);
+        }
+        return $usuariosTarjeta;
     }
 
     /**
@@ -43,7 +56,32 @@ class TarjetaController extends Controller
      */
     public function update(Request $request, Tarjeta $tarjeta)
     {
-        //
+        TarjetasUsuarios::eliminarTarjetaUsuarios($tarjeta->id);
+        TarjetasCategorias::eliminarTarjetaCategorias($tarjeta->id);
+
+        $tarjeta->titulo = $request->titulo;
+        $tarjeta->descripcion = $request->descripcion;
+        $tarjeta->save();
+
+        foreach($request->usuarios as $usuario){
+            $data = [
+                "tarjeta_id" => $tarjeta->id,
+                "tipo_id" => $usuario
+            ];
+            TarjetasUsuarios::create($data);
+        }
+
+        foreach($request->categorias as $categoria){
+            $data = [
+                "tarjeta_id" => $tarjeta->id,
+                "categoria_id" => $categoria
+            ];
+            TarjetasCategorias::create($data);
+        }
+
+        return response()->json([
+            "mensaje" => "Se editó la tarjeta con éxito"
+        ]);
     }
 
     /**
@@ -51,6 +89,13 @@ class TarjetaController extends Controller
      */
     public function destroy(Tarjeta $tarjeta)
     {
-        //
+        TarjetasUsuarios::eliminarTarjetaUsuarios($tarjeta->id);
+        TarjetasCategorias::eliminarTarjetaCategorias($tarjeta->id);
+
+        $tarjeta->delete();
+
+        return response()->json([
+            "mensaje" => "Tarjeta eliminada correctamente"
+        ], 200);
     }
 }

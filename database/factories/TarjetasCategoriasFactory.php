@@ -17,8 +17,8 @@ class TarjetasCategoriasFactory extends Factory
     public function definition(): array
     {
         return [
-            'tarjeta_id' => rand(1, 100),
-            'categoria_id' => rand(1, 10)
+            'tarjeta_id' => $this->faker->numberBetween(1, 100),
+            'categoria_id' => $this->faker->numberBetween(1, 10)
         ];
     }
 }

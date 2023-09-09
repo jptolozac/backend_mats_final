@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ComentarioTicket>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ComentariosTicket>
  */
-class ComentarioTicketFactory extends Factory
+class ComentariosTicketFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class ComentarioTicketFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "comentario_id" => $this->faker->numberBetween(1,50),
+            "ticket_id" => $this->faker->numberBetween(1,100)
         ];
     }
 }

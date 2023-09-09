@@ -17,7 +17,8 @@ class ItemFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nombre' => fake()->name(),
+            'categoria_id' => rand(1,5)
         ];
     }
 }

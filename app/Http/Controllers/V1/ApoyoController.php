@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apoyo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApoyoController extends Controller
 {
@@ -42,6 +43,9 @@ class ApoyoController extends Controller
 
                 $apoyo->save();
 
+                DB::table('noticias')->where('id', $apoyo->noticia_id)
+                                ->update(["likes" => DB::raw("likes + 1")]);
+
                 return response()->json([
                     "mensaje" => "apoyo registrado"
                 ]);
@@ -50,6 +54,9 @@ class ApoyoController extends Controller
                          ->where('noticia_id', '=', $request->noticia)
                          ->delete();
                 
+                DB::table('noticias')->where('id', $request->noticia)
+                                ->update(["likes" => DB::raw("likes - 1")]);
+
                 return response()->json([
                     "mensaje" => "apoyo eliminado"
                 ]);

@@ -15,16 +15,39 @@ class Tarjeta extends Model
         "descripcion"
     ];
 
-    public function getPreguntas($tipoUsuario, $categoria){
+    public function getPreguntas($tipoUsuario, $categorias, $buscar){
+        $consulta = "SELECT tj.id, tj.titulo, tj.descripcion
+        from tarjetas tj join tarjetas_usuarios tju on (tj.id = tju.tarjeta_id)
+                        join tarjetas_categorias tjc on (tj.id = tjc.tarjeta_id)
+                        join tipo_usuarios tu on (tu.id = tju.tipo_id)
+                        join categorias cat on (cat.id = tjc.categoria_id) "
+        . (((isset($tipoUsuario) && $tipoUsuario != "administrador") || (isset($categorias)) || (isset($buscar))) ? "\nwhere " : "")
+        . ((!empty($tipoUsuario) && $tipoUsuario != "administrador") ? "(tu.perfil = '{$tipoUsuario}' or tu.perfil = 'publico') " : "");
+
+        $ti = true;
+        if($categorias != null){
+            
+            $consulta .= (isset($tipoUsuario) && !empty($tipoUsuario) && $tipoUsuario != "administrador") ? "and (" : "(";
+            foreach($categorias as $categoria){
+                if($ti){
+                    $consulta .= "cat.id = " . $categoria;
+                    $ti = false;
+                }else{
+                    $consulta .= " or cat.id = " . $categoria;
+                }
+            }
+            $consulta .= ")";
+        }
+
+        if($buscar != null){
+            $consulta .= ((!$ti) ? " and " : " ");
+            $consulta .= "(tj.titulo like '%{$buscar}%' or tj.descripcion like '%{$buscar}%')";
+        }
         
-        return (DB::select("SELECT tj.id, tj.titulo, tj.descripcion
-                                from tarjetas tj join tarjetas_usuarios tju on (tj.id = tju.tarjeta_id)
-                                                join tarjetas_categorias tjc on (tj.id = tjc.tarjeta_id)
-                                                join tipo_usuarios tu on (tu.id = tju.tipo_id)
-                                                join categorias cat on (cat.id = tjc.categoria_id) "
-                                . ((isset($tipoUsuario) || isset($tipoUsuario)) ? "where " : "")
-                                . ((!empty($tipoUsuario) && $tipoUsuario != "administrador") ? "(tu.perfil = '{$tipoUsuario}') or tu.perfil = 'publico' " : "")
-                                . ((!empty($categoria)) ? "and cat.nombre = '{$categoria}' " : "" )
-                                . "group by tj.id, tj.titulo, tj.descripcion;"));
+        $consulta .= "\ngroup by tj.id, tj.titulo, tj.descripcion;";
+
+        //dd($consulta);
+
+        return (DB::select($consulta));
     }
 }

@@ -14,7 +14,8 @@ class Noticia extends Model
 
     protected $fillable = [
         'titulo',
-        'descripcion'
+        'descripcion',
+        'likes'
     ];
 
     /* public function noticiaTipo(){

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CategoriaResource;
 use App\Models\Categoria;
+use App\Models\TarjetasCategorias;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -51,7 +53,17 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //
+        $nombre = $request->validate([
+            "nombre" => "required"
+        ]);
+        
+        $categoria->nombre = $nombre["nombre"];
+
+        $categoria->save();
+
+        return response()->json([
+            "mensaje" => "categoría editada correctamente"
+        ], 200);
     }
 
     /**
@@ -59,6 +71,12 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        //
+        TarjetasCategorias::where("categoria_id", $categoria->id)->delete();
+
+        $categoria->delete();
+
+        response()->json([
+            "mensaje" => "mensaje eliminado correctamente"
+        ]);
     }
 }
