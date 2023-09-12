@@ -25,13 +25,15 @@ class UserResource extends JsonResource
             return [
                 'id' => $this->id,
                 'nombre' => $this->name,
+                'email' => $this->email,
                 'noticias' => $noticias
             ];
         }
         
         return [
             'id' => $this->id,
-            'nombre' => $this->name
+            'nombre' => $this->name,
+            'email' => $this->email
         ];
     }
 }

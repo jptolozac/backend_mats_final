@@ -18,13 +18,11 @@ return new class extends Migration
             //$table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            $table->unsignedBigInteger('permiso_id');
             $table->unsignedBigInteger('tipo_usuario_id');
 
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('permiso_id')->references('id')->on('permisos');
             $table->foreign('tipo_usuario_id')->references('id')->on('tipo_usuarios');
         });
     }

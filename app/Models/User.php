@@ -32,6 +32,16 @@ class User extends Authenticatable
         
         return $noticias;
     }
+
+    public function permisosUsuario(){
+        return(
+            $this->join('permisos_usuarios', 'users.id', '=', 'permisos_usuarios.user_id')
+            ->join('permisos', 'permisos.id', '=', 'permisos_usuarios.permiso_id')
+            ->select('permisos.id')
+            ->where('users.email', $this->email)
+            ->get()
+        );
+    }
     
 
     /**

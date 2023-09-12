@@ -19,18 +19,34 @@ class LoginController extends Controller
             return response()->json([
                 'token' => Auth::guard('admin')->user()->createToken($request->email)->plainTextToken,
                 'tipo_usuario' => ['perfil' => 'administrador'],
-                'permiso' => '1',
+                'permiso_noticias' => false,
+                'permiso_preguntas' => false,
+                'permiso_mesa_ayuda' => false,
                 'message' => 'ok'
             ]);
         }
         elseif(Auth::attempt($credenciales)){
+            $permiso_noticias = false;
+            $permiso_preguntas = false;
+            $permiso_mesa_ayuda = false;
+            $permisos = ($request->user()->permisosUsuario());
+            foreach($permisos as $permiso){
+                switch($permiso->id){
+                    case 1: $permiso_noticias = true; break;
+                    case 2: $permiso_preguntas = true; break;
+                    case 3: $permiso_mesa_ayuda = true; break;
+                };
+            }
+
             return response()->json([
                 'token' => $request->user()->createToken($request->email)->plainTextToken,
                 'tipo_usuario' => [
                     'id' => $request->user()->TipoUsuario->id, 
                     'perfil' => $request->user()->TipoUsuario->perfil
                 ],
-                'permiso' => $request->user()->Permiso->id,
+                'permiso_noticias' => $permiso_noticias,
+                'permiso_preguntas' => $permiso_preguntas,
+                'permiso_mesa_ayuda' => $permiso_mesa_ayuda,
                 'message' => 'ok'
             ]);
         }

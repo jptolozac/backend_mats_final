@@ -2,9 +2,14 @@
 
 use App\Http\Controllers\V1\CategoriaController;
 use App\Http\Controllers\V1\ApoyoController;
+use App\Http\Controllers\V1\CategoriaTKController;
+use App\Http\Controllers\V1\ItemController;
 use App\Http\Controllers\V1\TarjetaController;
+use App\Http\Controllers\V1\TicketController;
 use App\Http\Controllers\V1\UserController;
 use App\Http\Controllers\V1\FileController;
+use App\Models\CategoriaTK;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -49,8 +54,17 @@ Route::post('v1/noticias/cantidadNoticias', [NoticiaController::class, 'cantidad
 Route::apiResource('v1/tipo_usuario', TipoUsuarioController::class)
         ->only('show');
 
+Route::apiResource('v1/tickets', TicketController::class)
+        ->only('index');
+
+Route::apiResource('v1/categoriasTK', CategoriaTKController::class)
+        ->only('show');
+
+Route::apiResource('v1/items', ItemController::class)
+        ->only('show');
+
 Route::apiResource('v1/users', UserController::class)
-        ->only('index')
+        ->only('index', 'show')
         ->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

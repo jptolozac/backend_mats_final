@@ -3,20 +3,17 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\UserResource;
-use App\Models\User;
+use App\Models\Item;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class UserController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user = request()->user();
-        return new UserResource($user);
+        //
     }
 
     /**
@@ -30,15 +27,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user)
+    public function show(Item $item)
     {
-        return User::where('email', $user)->get();
+        return ($item);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Item $item)
     {
         //
     }
@@ -46,7 +43,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Item $item)
     {
         //
     }

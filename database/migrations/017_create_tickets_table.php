@@ -16,15 +16,16 @@ return new class extends Migration
             $table->string('asunto')->nullable(false);
             $table->text('descripcion')->nullable(false);
             $table->string('email_responsable')->nullable(false);
-            $table->string('fecha_solicitud')->nullable(true);
             $table->string('fecha_limite')->default(null);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('categoria_id');
+            $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('estado_id');
             $table->unsignedBigInteger('prioridad_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
             $table->foreign('estado_id')->references('id')->on('estados')->onDelete('cascade');
             $table->foreign('prioridad_id')->references('id')->on('prioridads')->onDelete('cascade');
