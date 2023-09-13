@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\TicketCollection;
+use App\Http\Resources\V1\TicketResource;
 use App\Models\Ticket;
 use Auth;
 use Illuminate\Http\Request;
@@ -33,9 +35,7 @@ class TicketController extends Controller
             return ((!empty($responsable[0])) ? $responsable[0] : ["mensaje" => "correo no encontrado"]);
         }
 
-        return ([
-            "data" => $tickets
-        ]);
+        return new TicketCollection($tickets);
     }
 
     /**
