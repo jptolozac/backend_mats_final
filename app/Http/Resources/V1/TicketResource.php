@@ -17,6 +17,8 @@ class TicketResource extends JsonResource
         $user = \App\Models\User::select('id', 'name', 'email')->find($this->user_id);
         $categoria = \App\Models\Categoria::select('id', 'nombre')->find($this->categoria_id);
         $item = \App\Models\Item::select('id', 'nombre')->find($this->item_id);
+        $itemCat = $item->toArray();
+        $itemCat["categoria"] =  $categoria->toArray();
         $estado = \App\Models\Estado::select('id', 'nombre')->find($this->estado_id);
         $prioridad = \App\Models\Prioridad::select('id', 'relevancia')->find($this->prioridad_id);
         $responsable = \App\Models\Ticket::nombreResponsable($this->email_responsable)[0];
@@ -26,7 +28,7 @@ class TicketResource extends JsonResource
             "descripcion" => $this->descripcion,
             "usuario" => $user,
             "categoria" => $categoria,
-            "item" => $item,
+            "item" => $itemCat,
             "estado" => $estado,
             "prioridad" => $prioridad,
             "responsable" => $responsable,
