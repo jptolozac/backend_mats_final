@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('asunto')->nullable(false);
             $table->text('descripcion')->nullable(false);
-            $table->string('email_responsable')->nullable(false);
-            $table->string('fecha_limite')->default(null);
+            $table->string('email_responsable')->nullable(true)->default(null);
+            $table->string('fecha_limite')->nullable(true)->default(null);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('categoria_id');
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('estado_id');
-            $table->unsignedBigInteger('prioridad_id');
+            $table->unsignedBigInteger('prioridad_id')->nullable(true)->default(null);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

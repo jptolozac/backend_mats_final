@@ -1,14 +1,20 @@
 <?php
 
+use App\Http\Controllers\V1\AdminController;
+use App\Http\Controllers\V1\CargaUsuariosController;
 use App\Http\Controllers\V1\CategoriaController;
 use App\Http\Controllers\V1\ApoyoController;
 use App\Http\Controllers\V1\CategoriaTKController;
+use App\Http\Controllers\V1\ComentarioController;
 use App\Http\Controllers\V1\ItemController;
+use App\Http\Controllers\V1\PermisoUsuarioController;
+use App\Http\Controllers\V1\QuejaController;
 use App\Http\Controllers\V1\TarjetaController;
 use App\Http\Controllers\V1\TicketController;
 use App\Http\Controllers\V1\UserController;
 use App\Http\Controllers\V1\FileController;
 use App\Models\CategoriaTK;
+use App\Models\PermisosUsuario;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +43,14 @@ Route::apiResource('v1/noticias/interes', NoticiaController::class) //cantidad d
         ->only('index','show');
  */
 
+Route::post('v1/carga_usuarios', [CargaUsuariosController::class, 'cargarDatos'])
+        ->middleware('auth:sanctum');
+
+Route::apiResource('v1/PermisosUsuarios', PermisoUsuarioController::class)
+        ->only('destroy');
+
 Route::apiResource('v1/tarjetas', TarjetaController::class)
-        ->only('index', 'show', 'update', 'destroy');
+        ->only('index', 'show', 'store', 'update', 'destroy');
 
 Route::apiResource('v1/categorias', CategoriaController::class)
         ->only('index', 'store', 'update', 'destroy');
@@ -55,16 +67,38 @@ Route::apiResource('v1/tipo_usuario', TipoUsuarioController::class)
         ->only('show');
 
 Route::apiResource('v1/tickets', TicketController::class)
-        ->only('index');
+        ->only('index', 'store', 'show');
+
+Route::apiResource('v1/tickets', TicketController::class)
+        ->only('update', 'destroy')
+        ->middleware('auth:sanctum');
 
 Route::apiResource('v1/categoriasTK', CategoriaTKController::class)
-        ->only('show');
+        ->only('index', 'show');
+
+Route::apiResource('v1/categoriasTK', CategoriaTKController::class)
+        ->only('update', 'store', 'destroy')
+        ->middleware('auth:sanctum');
 
 Route::apiResource('v1/items', ItemController::class)
+        ->only('index', 'show');
+
+Route::apiResource('v1/items', ItemController::class)
+        ->only('update', 'store', 'destroy')
+        ->middleware('auth:sanctum');
+        
+Route::apiResource('v1/comentarios', ComentarioController::class)
         ->only('show');
 
+Route::apiResource('v1/quejas', QuejaController::class)
+        ->only('index', 'store', 'update');
+
 Route::apiResource('v1/users', UserController::class)
-        ->only('index', 'show')
+        ->only('index', 'show', 'store', 'update')
+        ->middleware('auth:sanctum');
+        
+Route::apiResource('v1/administradors', AdminController::class)
+        ->only('show')
         ->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

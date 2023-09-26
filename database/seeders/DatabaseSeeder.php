@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        /* \App\Models\Permiso::create(['tipo_permiso' => 'administrador']);
-        \App\Models\Permiso::create(['tipo_permiso' => 'cliente']);
-        \App\Models\Permiso::create(['tipo_permiso' => 'usuario_final']);
+        /* \App\Models\Permiso::create(['tipo_permiso' => 'noticias']);
+        \App\Models\Permiso::create(['tipo_permiso' => 'preguntas_frecuentes']);
+        \App\Models\Permiso::create(['tipo_permiso' => 'mesa_de_ayuda']);
 
         \App\Models\TipoUsuario::create(['perfil' => 'publico']);
         \App\Models\TipoUsuario::create(['perfil' => 'profesor']);
@@ -44,15 +44,15 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Tarjeta::factory(100)->create();
 
-        \App\Models\Categoria::factory(10)->create();
+        \App\Models\Categoria::factory(10)->create();   
 
-        \App\Models\TarjetasUsuarios::factory(30)->create();
+        \App\Models\TarjetasUsuarios::factory(30)->create();*/
 
         \App\Models\TarjetasCategorias::factory(30)->create();
 
-        \App\Models\Prioridad::create(['relevancia' => 'alta']);
+        /* \App\Models\Prioridad::create(['relevancia' => 'baja']);
         \App\Models\Prioridad::create(['relevancia' => 'media']);
-        \App\Models\Prioridad::create(['relevancia' => 'baja']);
+        \App\Models\Prioridad::create(['relevancia' => 'alta']);
 
         \App\Models\CategoriaTK::factory(5)->create();
 
@@ -66,14 +66,16 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Ticket::factory(100)->create();
 
-        \App\Models\ComentariosTicket::factory(100)->create(); */
+        \App\Models\ComentariosTicket::factory(100)->create();  
         
         \App\Models\PermisosUsuario::factory(10)->create();
+
+        \App\Models\Queja::factory(10)->create();
 
 
         \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-        ]);
+        ]); */
     }
 }

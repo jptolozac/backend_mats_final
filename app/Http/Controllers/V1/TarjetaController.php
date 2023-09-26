@@ -35,7 +35,35 @@ class TarjetaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tarjetaREl = $request->validate([
+            "titulo" => 'required',
+            "descripcion" => 'required',
+            "usuarios" => 'required',
+            "categorias" => 'required',
+        ]);
+        $tarjetaNew['titulo'] = $tarjetaREl['titulo'];
+        $tarjetaNew['descripcion'] = $tarjetaREl['descripcion'];
+        $tarjeta = Tarjeta::create($tarjetaNew);
+
+        foreach($tarjetaREl['usuarios'] as $usuario){
+            $data = [
+                "tarjeta_id" => $tarjeta->id,
+                "tipo_id" => $usuario
+            ];
+            TarjetasUsuarios::create($data);
+        }
+
+        foreach($tarjetaREl['categorias'] as $categoria){
+            $data = [
+                "tarjeta_id" => $tarjeta->id,
+                "categoria_id" => $categoria
+            ];
+            TarjetasCategorias::create($data);
+        }
+
+        return response()->json([
+            "mensaje" => "Se creó la tarjeta con éxito"
+        ]);
     }
 
     /**

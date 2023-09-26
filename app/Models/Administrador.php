@@ -11,12 +11,22 @@ use Laravel\Sanctum\HasApiTokens;
 class Administrador extends Authenticatable
 {
     use HasFactory, HasApiTokens;
+    protected $fillable = [
+        'id',
+        'name',
+        'email',
+        'password',
+    ];
 
     protected $hidden = ['password'];
 
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function guardName(){
+        return "admin";
     }
 
 

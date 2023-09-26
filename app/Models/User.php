@@ -42,6 +42,10 @@ class User extends Authenticatable
             ->get()
         );
     }
+
+    public function guardName(){
+        return "user";
+    }
     
 
     /**
@@ -54,6 +58,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'tipo_usuario_id'
     ];
 
     /**

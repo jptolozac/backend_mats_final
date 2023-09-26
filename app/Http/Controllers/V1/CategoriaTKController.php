@@ -13,7 +13,7 @@ class CategoriaTKController extends Controller
      */
     public function index()
     {
-        //
+        return CategoriaTK::select('id', 'nombre')->get();
     }
 
     /**
@@ -21,7 +21,15 @@ class CategoriaTKController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dato = $request->validate([
+            "nombre" => "required"
+        ]);
+
+        CategoriaTK::create($dato);
+
+        return response()->json([
+            "mensaje" => "categoría creada"
+        ]);
     }
 
     /**
@@ -35,16 +43,33 @@ class CategoriaTKController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CategoriaTK $categoriaTK)
+    public function update(Request $request, string $categoriaTK)
     {
-        //
+        $categoriaTK = CategoriaTK::find($categoriaTK);
+
+        $dato = $request->validate([
+            "nombre" => "required"
+        ]);
+
+        $categoriaTK->nombre = $dato['nombre'];
+        $categoriaTK->save();
+        
+        return response()->json([
+            "mensaje" => "categoría actualizada"
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CategoriaTK $categoriaTK)
+    public function destroy(string $categoriaTK)
     {
-        //
+        $categoriaTK = CategoriaTK::find($categoriaTK);
+
+        $categoriaTK->delete();
+
+        return response()->json([
+            'mensaje' => 'categoría eliminada'
+        ]);
     }
 }

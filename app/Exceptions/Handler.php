@@ -31,9 +31,9 @@ class Handler extends ExceptionHandler
         });
     }
 
-    /* public function render($request, Throwable $exception){
+    public function render($request, Throwable $exception){
         return response()->json([
-            "mensaje" => "Por favor verifique la información"
+            "mensaje" => "Por favor verifique la información enviada"
         ], 404);
-    } */
+    }
 }
