@@ -15,7 +15,7 @@ class TicketResource extends JsonResource
     public function toArray(Request $request): array
     {
         $user = \App\Models\User::select('id', 'name', 'email')->find($this->user_id);
-        $categoria = \App\Models\Categoria::select('id', 'nombre')->find($this->categoria_id);
+        $categoria = \App\Models\CategoriaTK::select('id', 'nombre')->find($this->categoria_id);
         $item = \App\Models\Item::select('id', 'nombre')->find($this->item_id);
         $itemCat = $item->toArray();
         $itemCat["categoria"] =  $categoria->toArray();
