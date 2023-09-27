@@ -24,10 +24,10 @@ class Tarjeta extends Model
         . (((isset($tipoUsuario) && $tipoUsuario != "administrador") || (isset($categorias)) || (isset($buscar))) ? "\nwhere " : "")
         . ((!empty($tipoUsuario) && $tipoUsuario != "administrador") ? "(tu.perfil = '{$tipoUsuario}' or tu.perfil = 'publico') " : "");
 
+        $consulta .= (!empty($tipoUsuario) && $tipoUsuario != "administrador" && (isset($categorias) || isset($buscar))) ? "and " : "";
         $ti = true;
         if($categorias != null){
-            
-            $consulta .= (isset($tipoUsuario) && !empty($tipoUsuario) && $tipoUsuario != "administrador") ? "and (" : "(";
+            $consulta .= "(";
             foreach($categorias as $categoria){
                 if($ti){
                     $consulta .= "cat.id = " . $categoria;
@@ -45,6 +45,7 @@ class Tarjeta extends Model
         }
         
         $consulta .= "\ngroup by tj.id, tj.titulo, tj.descripcion;";
+        //dd($consulta);
 
         //dd($consulta);
 
