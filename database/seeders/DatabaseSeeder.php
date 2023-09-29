@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        /* \App\Models\Permiso::create(['tipo_permiso' => 'noticias']);
+        \App\Models\Permiso::create(['tipo_permiso' => 'noticias']);
         \App\Models\Permiso::create(['tipo_permiso' => 'preguntas_frecuentes']);
         \App\Models\Permiso::create(['tipo_permiso' => 'mesa_de_ayuda']);
 
@@ -46,11 +46,11 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Categoria::factory(10)->create();   
 
-        \App\Models\TarjetasUsuarios::factory(30)->create();*/
+        \App\Models\TarjetasUsuarios::factory(30)->create();
 
         \App\Models\TarjetasCategorias::factory(30)->create();
 
-        /* \App\Models\Prioridad::create(['relevancia' => 'baja']);
+        \App\Models\Prioridad::create(['relevancia' => 'baja']);
         \App\Models\Prioridad::create(['relevancia' => 'media']);
         \App\Models\Prioridad::create(['relevancia' => 'alta']);
 
@@ -76,6 +76,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-        ]); */
+        ]);
     }
 }
