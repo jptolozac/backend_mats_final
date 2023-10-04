@@ -21,7 +21,8 @@ class TicketResource extends JsonResource
         $itemCat["categoria"] =  $categoria->toArray();
         $estado = \App\Models\Estado::select('id', 'nombre')->find($this->estado_id);
         $prioridad = \App\Models\Prioridad::select('id', 'relevancia')->find($this->prioridad_id);
-        $responsable = \App\Models\Ticket::nombreResponsable($this->email_responsable)[0];
+        $responsable = \App\Models\Ticket::nombreResponsable($this->email_responsable)[0] ?? ["name" => "Sin responsable", "email" => "Sin responsable"];
+        //dump($responsable['email'], ["email => " => $this->email_responsable]);
         return [
             "id" => $this->id,
             "asunto" => $this->asunto,
