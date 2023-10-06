@@ -94,7 +94,7 @@ Route::apiResource('v1/quejas', QuejaController::class)
         ->only('index', 'store', 'update');
 
 Route::apiResource('v1/users', UserController::class)
-        ->only('index', 'show', 'store', 'update')
+        ->only('index', 'show', 'store', 'update', 'destroy')
         ->middleware('auth:sanctum');
         
 Route::apiResource('v1/administradors', AdminController::class)
