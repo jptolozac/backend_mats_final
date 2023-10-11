@@ -17,7 +17,7 @@ class FrameGuard
     {
         $response = $next($request);
 
-        $response->headers->set('X-Frame-Options', 'ALLOW-FROM mats.dev'/* , false */);
+        $response->headers->set('X-Frame-Options', 'ALLOW-FROM api.test'/* , false */);
 
         return $response;
     }
