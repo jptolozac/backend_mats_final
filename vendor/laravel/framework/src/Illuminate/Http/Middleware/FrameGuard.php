@@ -17,7 +17,7 @@ class FrameGuard
     {
         $response = $next($request);
 
-        $response->headers->set('X-Frame-Options', 'SAMEORIGIN', true);
+        //$response->headers->set('X-Frame-Options', 'SAMEORIGIN', false);
 
         return $response;
     }
