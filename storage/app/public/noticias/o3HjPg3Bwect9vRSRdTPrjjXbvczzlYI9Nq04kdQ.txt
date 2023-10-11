@@ -1,0 +1,7 @@
+token
+traer de a 20 noticias por default o las noticias que se requieran por parametro y según el tipo de noticia
+hacer la búsqueda con la cantidad de noticias solicitadas
+
+
+ya se creó correctamente la migración para la base de datos con seeders
+TipoUsuarioResource
