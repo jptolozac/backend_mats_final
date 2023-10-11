@@ -35,7 +35,7 @@ class FileController extends Controller
     public function downloadFile(int $id){
         $consulta = DB::select("SELECT archivo from noticias where id = {$id}");
         $nombre = $consulta[0]->archivo;
-        //dd($nombre);
+        dd($nombre);
         $ruta = 'public/noticias/' . $nombre;
 
         if(Storage::disk($this->disk)->exists('noticias/' . $nombre)){
