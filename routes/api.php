@@ -105,8 +105,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('v1/archivo/{id}', [FileController::class, 'storeFile']); //continuar
-Route::get('v1/archivo/{id}', [FileController::class, 'downloadFile']);
+Route::middleware('cors')->group(function(){
+        Route::post('v1/archivo/{id}', [FileController::class, 'storeFile']);
+        Route::get('v1/archivo/{id}', [FileController::class, 'downloadFile']);
+});
 
 Route::post('login', [App\Http\Controllers\LoginController::class, 'login']);
 
