@@ -56,7 +56,14 @@ class UserController extends Controller
      */
     public function show(string $user)
     {
-        return (!empty(User::where('email', $user)->get()->toArray())) ? User::where('email', $user)->get()->toArray() : Administrador::where('email', $user)->get()->toArray();
+        $usuario = (!empty(User::where('email', $user)->get()->toArray())) ? User::where('email', $user)->get()->toArray() : Administrador::where('email', $user)->get()->toArray() ?? [];
+
+        $permisos = (count($usuario) > 0) ? (PermisosUsuario::select('permiso_id')->where('user_id', $usuario[0]['id'])->get()) : [];
+
+        return response()->json([
+            "usuario" => $usuario,
+            "permisos" => $permisos
+        ]);
     }
 
     /**

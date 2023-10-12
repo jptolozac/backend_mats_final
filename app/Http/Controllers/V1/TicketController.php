@@ -53,7 +53,7 @@ class TicketController extends Controller
             "item" => "required|numeric",
         ]);
 
-        $datos["email_responsable"] = "nrubios@udistrital.edu.co";
+        $datos["email_responsable"] = "coordinacion@udistrital.edu.co";
         $datos['user_id'] = (\App\Models\User::select('id')->where('email', $datos['usuario'])->get()[0]->id);
         unset($datos['usuario']);
         $datos['categoria_id'] = $datos['categoria'];

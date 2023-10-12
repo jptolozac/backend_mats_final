@@ -98,7 +98,7 @@ Route::apiResource('v1/users', UserController::class)
         ->middleware('auth:sanctum');
         
 Route::apiResource('v1/administradors', AdminController::class)
-        ->only('show')
+        ->only('show', 'destroy')
         ->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

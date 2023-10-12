@@ -31,7 +31,7 @@ class AdminController extends Controller
     {
         if(request()->accion == "buscarResponsable"){
             $responsable = Administrador::select('id', 'name', 'email')->where("email", $email)->get();
-            $responsable = ($responsable->toArray() == []) ? \App\Models\User::select('id', 'name', 'email')->where("email", $email)->where('tipo_usuario_id', 2)->get() : $responsable;
+            $responsable = ($responsable->toArray() == []) ? \App\Models\User::select('id', 'name', 'email')->where("email", $email)->get() : $responsable;
             $mensaje = ($responsable->toArray() != []) ? $responsable[0] : null;
         }
         return response()->json([
@@ -52,6 +52,16 @@ class AdminController extends Controller
      */
     public function destroy(Administrador $administrador)
     {
-        //
+        if($administrador){
+            $administrador->delete();
+
+            return response()->json([
+                "mensaje" => "usuario eliminado"
+            ]);
+        }
+
+        return response()->json([
+            "mensaje" => "usuario no encontrado"
+        ]);
     }
 }

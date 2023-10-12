@@ -49,6 +49,7 @@ class PermisoUsuarioController extends Controller
             $permisosUsuarios = \App\Models\User::join('permisos_usuarios', 'users.id', '=', 'permisos_usuarios.user_id')
                             ->select('permisos_usuarios.id')
                             ->where('users.email', $email)
+                            ->where('permisos_usuarios.permiso_id', 1)
                             ->get();
             foreach($permisosUsuarios as $permisoUsuario){
                 PermisosUsuario::where('id',$permisoUsuario->id)->delete();
@@ -68,9 +69,38 @@ class PermisoUsuarioController extends Controller
                 //dump($permiso);
             }
         }
+        if(request()->permiso == 'mesa_ayuda'){
+            $usuario = \App\Models\User::where('email', $email)->get();
+            if(count($usuario) > 0) {
+                $clase = \App\Models\User::class;
+                $tabla = 'users';
+            }else{ 
+                $clase = \App\Models\Administrador::class;
+                $usuario = $clase::where('email', $email)->get();
+                $tabla = 'administradors';
+            } 
+            
+            $ticketsAsignadosUser = $clase::join('tickets', "{$tabla}.email", '=', 'tickets.email_responsable')
+                ->where('email', $email)
+                ->where('estado_id', '!=', 3)
+                ->get()
+                ->toArray();
+
+            if((count($ticketsAsignadosUser) > 0)){
+                return response()->json([
+                    "mensaje" => "tickets pendientes"
+                ]);
+            }
+            if($tabla != 'administradors'){
+                PermisosUsuario::where('user_id', $usuario[0]->id)
+                    ->where('permiso_id', 3)
+                    ->delete();
+            }
+        }
 
         return response()->json([
             "mensaje" => "permiso eliminado"
         ], 200);
     }
 }
+;
