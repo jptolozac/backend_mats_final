@@ -63,7 +63,11 @@ class TicketController extends Controller
         $datos['estado_id'] = 1;
 
         //dd($datos);
-        Ticket::create($datos);
+        $ticket = Ticket::create($datos);
+
+        $ticket->fecha_limite = $datos['fecha_limite'] = $this->calcularFechaLimite(15, Carbon::now()->tz('America/Bogota'));
+
+        $ticket->save();
 
         return response()->json([
             "mensaje" => "ticket creado con exito"
